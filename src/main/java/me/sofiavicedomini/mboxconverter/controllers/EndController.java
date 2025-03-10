@@ -52,11 +52,7 @@ public class EndController extends Controller<EndController.EndData> {
     }
 
     public void openFolder() throws IOException {
-        try {
-            Desktop.getDesktop().browseFileDirectory(new File(data.filePath));
-        } catch (Throwable e) {
-            Desktop.getDesktop().open(new File(data.filePath).getParentFile());
-        }
+        Desktop.getDesktop().open(new File(data.filePath));
     }
 
     public void goHome() throws IOException {

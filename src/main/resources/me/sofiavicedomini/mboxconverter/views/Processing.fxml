@@ -30,7 +30,7 @@
 
     <Label fx:id="percentageLabel"/>
 
-        <TextArea fx:id="logging" editable="false" prefWidth="Infinity" prefHeight="150" wrapText="true"/>
+    <TextArea fx:id="logging" editable="false" prefHeight="150" wrapText="true"/>
 
     <Button fx:id="cancelButton" text="Annulla" onAction="#cancelOperation" />
 </VBox>
