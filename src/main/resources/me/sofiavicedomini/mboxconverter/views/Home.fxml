@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="me.sofiavicedomini.mboxconverter.controllers.HomeController"
+      spacing="10">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+
+    <Label text="Seleziona il file MBOX:"/>
+    <HBox spacing="5">
+        <TextField fx:id="mboxPath" editable="false" prefWidth="300"/>
+        <Button text="Sfoglia" onAction="#selectMboxFile"/>
+    </HBox>
+
+    <Label text="Seleziona la cartella di destinazione:"/>
+    <HBox spacing="5">
+        <TextField fx:id="outputPath" editable="false" prefWidth="300"/>
+        <Button text="Sfoglia" onAction="#selectOutputDirectory"/>
+    </HBox>
+
+    <Button fx:id="confirmBtn" text="Conferma" onAction="#confirmSelection"/>
+</VBox>
