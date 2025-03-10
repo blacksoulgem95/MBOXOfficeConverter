@@ -5,10 +5,11 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.SharedByteArrayInputStream;
 import javafx.concurrent.Task;
 import lombok.RequiredArgsConstructor;
+import org.simplejavamail.converter.EmailConverter;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +50,18 @@ public class MboxConversionService {
         return msg;
     }
 
-    void convertToMsg(MimeMessage message, String outputDir) throws Exception {
+    void convertToEml(MimeMessage message, String outputDir) throws Exception {
         String subject = message.getSubject().replaceAll("[^a-zA-Z0-9]", "_");
         File msgFile = new File(outputDir, "email_"
                 + message.getSentDate().toInstant().atZone(ZoneId.of("GMT"))
                 .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replaceAll("[^a-zA-Z0-9]", "_")
-                + '_' + subject + ".msg");
+                + '_' + subject + ".eml");
+
 
         try (FileOutputStream fos = new FileOutputStream(msgFile)) {
-            message.writeTo(fos);
+            fos.write(EmailConverter.mimeMessageToEML(message).getBytes(StandardCharsets.UTF_8));
         }
+
         logger.info("Converted: " + msgFile.getAbsolutePath());
     }
 
@@ -79,7 +82,7 @@ public class MboxConversionService {
                 for (int i = 0; i < mimeMessages.size(); i++) {
                     var message = mimeMessages.get(i);
                     try {
-                        mboxService.convertToMsg(message, msgListFolder);
+                        mboxService.convertToEml(message, msgListFolder);
                         updateProgress(i + 1, total);
                         updateMessage(String.format("Converted: %d of %d", i + 1, total));
                     } catch (Exception e) {
